@@ -1,8 +1,11 @@
 var container = document.getElementById('container');
 
-// global objects
+// global
 const UP = 38; const RIGHT = 39; const DOWN = 40; const LEFT = 37; const SPACE = 32;
-const SPEED = 150;
+const SPEED = 250;
+const sound = document.getElementById('sound');
+const score = document.getElementById('score');
+
 var directions ={
     up : {x: 0, y: -20},
     right : {x: 20, y: 0},
@@ -20,7 +23,8 @@ var flag = false;
 
 // test snake
 
-var snake = new Snake({x: 200, y: 200}, 3)
+var snake = new Snake({x: 200, y: 200}, 3);
+score.innerText = snake.getLength();
 start();
 
 document.onkeydown = function(e){
@@ -62,8 +66,7 @@ document.onkeydown = function(e){
 
 
 // constructors and help functions
-function update()
-{
+function update(){
     // game logic
     flag = true;
     checkFood();
@@ -210,6 +213,10 @@ function Snake(start, count){
 
     this.direction = directions.left;
 
+    this.getLength = function(){
+        return this.points.length;
+    }
+
     this.isbadMove = function(){
         var head = this.points[0];
         var index = this.points.slice(1).findIndex(function(el){return el.x == head.x && el.y == head.y});
@@ -222,6 +229,7 @@ function Snake(start, count){
                 deadPoints--;
             }
         }
+        score.innerText = this.getLength();
     } 
     
 
@@ -239,5 +247,7 @@ function Snake(start, count){
     this.eat = function(apple){
         apple.element.style['background-color'] = 'transparent';
         this.points.push(apple);
+        sound.play();
+        score.innerText = parseInt(score.innerText) + 1;
     }
 }

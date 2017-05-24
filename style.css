@@ -1,6 +1,6 @@
 #container{
     border: 1px solid;
-    position: absolute;
+    position: relative;
 }
 
 .point{
@@ -16,4 +16,10 @@
     height: 20px;
     width: 20px;
     position: absolute;
+}
+#sound{
+    opacity: 0;
+}
+#scoreboard{
+    margin-top: 10px;
 }
